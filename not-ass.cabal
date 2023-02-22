@@ -1,6 +1,6 @@
 cabal-version:   2.4
 name:            not-ass
-version:         0
+version:         1.0.0
 license:         BSD-3-Clause
 build-type:      Simple
 license-file:    LICENSE
@@ -12,24 +12,13 @@ extra-doc-files:
   CHANGELOG.md
   README.md
 
--- category:
--- description:     description
--- synopsis:        one-line synopsis
--- homepage:        https://github.com/FIXME/not-ass#readme
--- source-repository head
---   type:     git
---   location: git://github.com/FIXME/not-ass.git
-
-common common-options
+library
+  hs-source-dirs:   src
+  exposed-modules:  UnionFind
+  build-depends:    monad-st
   build-depends:    base >=4.9 && <5
   default-language: Haskell2010
   ghc-options:
     -Wall -Wcompat -Widentities -Wincomplete-uni-patterns
     -Wincomplete-record-updates -Wredundant-constraints
     -fhide-source-paths -Wpartial-fields
-
-library
-  import:          common-options
-  hs-source-dirs:  src
-  exposed-modules: Lib
-  build-depends:   monad-st
