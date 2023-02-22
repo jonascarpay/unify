@@ -1,0 +1,5 @@
+packages:
+  ./
+
+package not-ass
+  tests: True

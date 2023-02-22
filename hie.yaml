@@ -1,0 +1,16 @@
+cradle:
+  multi:
+    # - path: "ignore/"
+    #   config: {cradle: {none: }}
+
+    - path: "src"
+      config: {cradle: {cabal: {component: "lib:not-ass"}}}
+
+    - path: "app"
+      config: {cradle: {cabal: {component: "not-ass:not-ass-exe"}}}
+
+    - path: "test"
+      config: {cradle: {cabal: {component: "not-ass:not-ass-test"}}}
+
+    - path: "bench"
+      config: {cradle: {cabal: {component: "not-ass:not-ass-bench"}}}
