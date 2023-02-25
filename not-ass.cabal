@@ -14,9 +14,15 @@ extra-doc-files:
 
 library
   hs-source-dirs:   src
-  exposed-modules:  UnionFind
-  build-depends:    monad-st
-  build-depends:    base >=4.9 && <5
+  exposed-modules:
+    UnionFind
+    UnionFind.Internal
+
+  build-depends:
+    , base          >=4.9 && <5
+    , monad-st
+    , transformers
+
   default-language: Haskell2010
   ghc-options:
     -Wall -Wcompat -Widentities -Wincomplete-uni-patterns
