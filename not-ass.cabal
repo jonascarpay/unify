@@ -17,9 +17,11 @@ library
   exposed-modules:
     UnionFind
     UnionFind.Internal
+    OnionFind
 
   build-depends:
     , base          >=4.9 && <5
+    , containers
     , monad-st
     , transformers
 
