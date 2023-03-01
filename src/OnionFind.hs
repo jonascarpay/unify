@@ -101,6 +101,7 @@ fuseAp (IUnify i) (IUnify o) = IUnify $ \ok -> i (\f -> o (ok . f))
 morph :: (i -> o) -> IUnify s i o ()
 morph f = unsafeMorph (fmap f)
 
+{-# ANN morphT "HLint: ignore Eta reduce" #-}
 morphT :: (forall f. Traversable f => f i -> f o) -> IUnify s i o ()
 morphT f = unsafeMorph f
 
@@ -111,31 +112,24 @@ morphM f = unsafeMorph (\i -> f i <$> i)
 unsafeMorph :: (IntMap i -> IntMap o) -> IUnify s i o ()
 unsafeMorph f = IUnify $ \ok l r -> ok () l (f r)
 
-unify :: Point s -> Point s -> IUnify s t t ()
+unify :: Point s -> Point s -> Unify s t ()
 unify (Point p1) (Point p2) = IUnify $ \ok l r n ->
   let (r1, l1) = find p1 l
       (r2, l2) = find p2 l1
    in ok () (IntMap.insert r2 r1 l2) (IntMap.delete r2 r) n
 
-unifyWith :: (t -> t -> t) -> Point s -> Point s -> IUnify s t t ()
-unifyWith f (Point p1) (Point p2) = IUnify $ \ok l r n ->
-  let (r1, l1) = find p1 l
-      (r2, l2) = find p2 l1
-      t1 = r IntMap.! r1
-      t2 = r IntMap.! r2
-   in ok () (IntMap.insert r2 r1 l2) (IntMap.insert r1 (f t1 t2) $ IntMap.delete r2 r) n
+unifyWith :: (t -> t -> t) -> Point s -> Point s -> Unify s t ()
+unifyWith f p1 p2 = void $ unifyGeneric (\a b -> pure ((), f a b)) p1 p2
 
-unifyErr :: (t -> t -> Either e t) -> Point s -> Point s -> IUnify s t t (Maybe e)
-unifyErr f (Point p1) (Point p2) = IUnify $ \ok l r n ->
-  let (r1, l1) = find p1 l
-      (r2, l2) = find p2 l1
-      t1 = r IntMap.! r1
-      t2 = r IntMap.! r2
-   in case f t1 t2 of
-        Left e -> ok (Just e) l r n
-        Right t -> ok Nothing (IntMap.insert r2 r1 l2) (IntMap.insert r1 t $ IntMap.delete r2 r) n
+unifyErr :: (t -> t -> Either e t) -> Point s -> Point s -> Unify s t (Maybe e)
+unifyErr f p1 p2 = either pure (const Nothing) <$> unifyGeneric f' p1 p2
+  where
+    f' a b = case f a b of
+      Left e -> Left e
+      Right r -> Right ((), r)
 
-unifyGeneric :: (t -> t -> Either e (info, t)) -> Point s -> Point s -> IUnify s t t (Either e info)
+{-# INLINE unifyGeneric #-}
+unifyGeneric :: (t -> t -> Either e (info, t)) -> Point s -> Point s -> Unify s t (Either e info)
 unifyGeneric f (Point p1) (Point p2) = IUnify $ \ok l r n ->
   let (r1, l1) = find p1 l
       (r2, l2) = find p2 l1
