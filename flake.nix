@@ -1,5 +1,5 @@
 {
-  description = "not-ass";
+  description = "unify";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
   inputs.flake-utils.url = "github:numtide/flake-utils";
@@ -10,10 +10,10 @@
         haskell = prev.haskell // {
           packageOverrides = hfinal: hprev:
             prev.haskell.packageOverrides hfinal hprev // {
-              not-ass = hfinal.callCabal2nix "not-ass" ./. { };
+              unify = hfinal.callCabal2nix "unify" ./. { };
             };
         };
-        not-ass = final.haskell.lib.compose.justStaticExecutables final.haskellPackages.not-ass;
+        unify = final.haskell.lib.compose.justStaticExecutables final.haskellPackages.unify;
       };
       perSystem = system:
         let
@@ -23,7 +23,7 @@
         {
           devShell = hspkgs.shellFor {
             withHoogle = true;
-            packages = p: [ p.not-ass ];
+            packages = p: [ p.unify ];
             buildInputs = [
               hspkgs.cabal-install
               hspkgs.haskell-language-server
@@ -32,7 +32,7 @@
               pkgs.bashInteractive
             ];
           };
-          defaultPackage = pkgs.not-ass;
+          defaultPackage = pkgs.unify;
         };
     in
     { inherit overlay; } // inputs.flake-utils.lib.eachDefaultSystem perSystem;

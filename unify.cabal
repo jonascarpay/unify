@@ -1,5 +1,5 @@
 cabal-version:   2.4
-name:            not-ass
+name:            unify
 version:         1.0.0
 license:         BSD-3-Clause
 build-type:      Simple
@@ -15,9 +15,9 @@ extra-doc-files:
 library
   hs-source-dirs:   src
   exposed-modules:
+    OnionFind
     UnionFind
     UnionFind.Internal
-    OnionFind
 
   build-depends:
     , base          >=4.9 && <5

@@ -4,13 +4,13 @@ cradle:
     #   config: {cradle: {none: }}
 
     - path: "src"
-      config: {cradle: {cabal: {component: "lib:not-ass"}}}
+      config: {cradle: {cabal: {component: "lib:unify"}}}
 
     - path: "app"
-      config: {cradle: {cabal: {component: "not-ass:not-ass-exe"}}}
+      config: {cradle: {cabal: {component: "unify:unify-exe"}}}
 
     - path: "test"
-      config: {cradle: {cabal: {component: "not-ass:not-ass-test"}}}
+      config: {cradle: {cabal: {component: "unify:unify-test"}}}
 
     - path: "bench"
-      config: {cradle: {cabal: {component: "not-ass:not-ass-bench"}}}
+      config: {cradle: {cabal: {component: "unify:unify-bench"}}}

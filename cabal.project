@@ -1,5 +1,5 @@
 packages:
   ./
 
-package not-ass
+package unify
   tests: True
