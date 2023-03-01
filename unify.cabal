@@ -15,9 +15,7 @@ extra-doc-files:
 library
   hs-source-dirs:   src
   exposed-modules:
-    OnionFind
-    UnionFind
-    UnionFind.Internal
+    Control.Unify
 
   build-depends:
     , base          >=4.9 && <5

@@ -4,7 +4,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE RankNTypes #-}
 
-module OnionFind
+module Control.Unify
   ( UnifyIT,
     UnifyT,
     Unify,
