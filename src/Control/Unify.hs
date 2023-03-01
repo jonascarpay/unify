@@ -22,6 +22,7 @@ module Control.Unify
     rootElems,
     rootKeys,
     roots,
+    local,
     unPoint,
     bind,
     fuse,
